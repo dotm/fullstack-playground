@@ -20,10 +20,10 @@ provider "aws" {
 
   default_tags {
     tags = {
-      deployment_environment_name    = "local"
-      deployment_environment_purpose = "Rapid local experimentation for individual developer"
-      project_name                   = "fullstack-playground"
-      module_name                    = "network"
+      deployment_environment_name    = var.deployment_environment_name
+      deployment_environment_purpose = var.deployment_environment_purpose
+      project_name                   = var.project_name
+      module_name                    = var.module_name
     }
   }
 }

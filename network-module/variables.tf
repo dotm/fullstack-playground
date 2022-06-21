@@ -51,6 +51,7 @@ variable "project_name" {
 
 variable "module_name" {
   type = string
+  default = "network"
 }
 
 variable "vpc_cidr" {
