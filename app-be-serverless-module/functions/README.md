@@ -1,0 +1,1 @@
+All handler should be put inside main.go
