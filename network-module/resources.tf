@@ -1,8 +1,8 @@
 #Put resources here.
 #If this files become to long, you can move related resources to their own files.
 
-#Local variables that is used in multiple files should be placed in ./locals.tf
-#Put local variables that is only used in this file below
+#Local variables that are used in multiple files should be placed in ./locals.tf
+#Put local variables that are only used in this file below
 locals {
   give_ec2_instance_in_private_subnet_internet_connection = false
 

@@ -1,7 +1,3 @@
-#!/bin/bash -xe
-echo "Hello World" > index.html
-sudo python -m SimpleHTTPServer 80
-
 This is the backend layer of the fullstack app.
 Use this to provision a single EC2 instance.
 
