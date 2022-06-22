@@ -1,8 +1,5 @@
 .DS_Store
 
-*.pem
-*.pub
-
 local.tfvars
 .terraform
 .terraform.tfstate.lock.info
