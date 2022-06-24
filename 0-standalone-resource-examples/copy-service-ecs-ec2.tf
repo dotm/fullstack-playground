@@ -214,7 +214,7 @@ resource "aws_ecs_capacity_provider" "process_clip_service" {
   name     = each.value.long_name
 
   auto_scaling_group_provider {
-    auto_scaling_group_arn         = aws_autoscaling_group.process_clip_service[each.key].arn
+    auto_scaling_group_arn = aws_autoscaling_group.process_clip_service[each.key].arn
 
     managed_scaling {
       maximum_scaling_step_size = 3
@@ -293,7 +293,7 @@ resource "aws_ecs_service" "process_clip_ecs_services" {
   desired_count   = 0
   capacity_provider_strategy {
     capacity_provider = each.value.long_name
-    weight = 1
+    weight            = 1
   }
 
   deployment_maximum_percent         = 200

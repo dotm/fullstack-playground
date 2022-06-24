@@ -6,7 +6,7 @@ resource "aws_instance" "test" {
   tags = {
     Name = "test_instance"
   }
-  
+
   # launch_template {}
 
   iam_instance_profile   = ""
@@ -70,7 +70,7 @@ resource "aws_instance" "test" {
   source_dest_check     = true
 
   # host_id = null #Dedicated host id
-  tenancy               = "default"
+  tenancy = "default"
 
   user_data                   = <<-EOF
   #!/bin/sh
