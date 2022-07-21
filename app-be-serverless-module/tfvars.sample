@@ -1,0 +1,9 @@
+aws_deployment_access_key_id     = null #fill this
+aws_deployment_secret_access_key = null #fill this
+aws_deployment_account_id        = "228078008846"
+aws_deployment_region            = "ap-southeast-1"
+aws_deployment_region_short      = "apse1"
+deployment_environment_name      = "local"
+deployment_environment_purpose   = "Rapid local experimentation for individual developer"
+project_name                     = "fullstack-playground"
+project_name_short               = "fspg"

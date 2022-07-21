@@ -1,11 +1,10 @@
-Use this module to experiment with `terraform console`
+This is an example lambda zip module.
 
-## Running Terraform Console
+## Deploy to your local cloud
 
 - Setup an AWS account
 - Setup AWS CLI and configure it
 - Create a local.tfvars based on tfvars.sample
 - Make sure you use the directory this README is in as root directory
 - `terraform init`
-- `terraform console`
-  - enter `exit` to exit console
+- `terraform apply -var-file=local.tfvars`

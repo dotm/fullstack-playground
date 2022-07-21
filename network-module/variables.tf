@@ -1,18 +1,38 @@
 variable "aws_deployment_access_key_id" {
-  type = string
+  type      = string
+  nullable  = false
+  sensitive = true
 }
 
 variable "aws_deployment_secret_access_key" {
-  type = string
+  type      = string
+  nullable  = false
+  sensitive = true
 }
 
 variable "aws_deployment_account_id" {
-  type = string
+  type     = string
+  nullable = false
 }
 
 variable "aws_deployment_region" {
-  type    = string
-  default = "ap-southeast-1"
+  type     = string
+  nullable = false
+  default  = "ap-southeast-1"
+}
+
+variable "aws_deployment_region_short" {
+  description = "Short/abbreviated version of aws_deployment_region. Useful for naming resources."
+
+  type     = string
+  nullable = false
+  default  = "apse1"
+
+  validation {
+    //must refer and can only refer to self var 
+    condition     = length(var.aws_deployment_region_short) < 6
+    error_message = "aws_deployment_region_short must have length of less than 6"
+  }
 }
 
 variable "aws_deployment_availability_zones" {
@@ -38,20 +58,25 @@ variable "aws_deployment_availability_zones" {
 }
 
 variable "deployment_environment_name" {
-  type = string
+  type     = string
+  nullable = false
 }
 
 variable "deployment_environment_purpose" {
-  type = string
+  type     = string
+  nullable = false
 }
 
 variable "project_name" {
-  type = string
+  type     = string
+  nullable = false
+  default  = "fullstack-playground"
 }
 
 variable "module_name" {
-  type = string
-  default = "network"
+  type     = string
+  nullable = false
+  default  = "network"
 }
 
 variable "vpc_cidr" {

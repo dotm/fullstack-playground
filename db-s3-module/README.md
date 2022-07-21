@@ -5,7 +5,7 @@ Resources not in local deployment environment should not be auto-deleted to avoi
 
 - Setup an AWS account
 - Setup AWS CLI and configure it
-- Create a local.tfvars
+- Create a local.tfvars based on tfvars.sample
 - Make sure you use the directory this README is in as root directory
 - `terraform init`
 - `terraform apply -var-file=local.tfvars`
