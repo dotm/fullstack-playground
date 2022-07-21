@@ -13,7 +13,7 @@ resource "aws_apigatewayv2_route" "example_http" {
 
   authorization_scopes = [""]   #used with a JWT authorizer to authorize the method invocation.
   authorization_type   = "NONE" #valid values: NONE (open access), JWT, AWS_IAM (IAM permissions), and CUSTOM (Lambda authorizer). Defaults to NONE.
-  authorizer_id        = aws_apigatewayv2_authorizer.example_http.id
+  # authorizer_id        = aws_apigatewayv2_authorizer.example_http.id #Unnecessary if authorization_type = "NONE"
 
   operation_name = "DefaultRoute" #example: "ListFiles" for the GET /files route key
 

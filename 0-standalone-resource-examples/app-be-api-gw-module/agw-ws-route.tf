@@ -15,7 +15,7 @@ resource "aws_apigatewayv2_route" "example_ws" {
 
   authorization_scopes = [""]   #used with a JWT authorizer to authorize the method invocation.
   authorization_type   = "NONE" #valid values: NONE (open access), AWS_IAM (IAM permissions), CUSTOM (Lambda authorizer). Defaults to NONE.
-  authorizer_id        = aws_apigatewayv2_authorizer.example_ws.id
+  # authorizer_id        = aws_apigatewayv2_authorizer.example_ws.id #Unnecessary if authorization_type = "NONE"
 
   #see: https://docs.aws.amazon.com/apigateway/latest/developerguide/websocket-api-request-validation.html
   model_selection_expression = ""

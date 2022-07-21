@@ -3,6 +3,10 @@
 locals {
 }
 
+#Note:
+# deployment is a snapshot of the API configuration.
+# stage is a named reference to a deployment.
+
 resource "aws_apigatewayv2_api" "example_http" {
   name          = "example_http"
   description   = "An example implementation of HTTP API"
@@ -55,6 +59,32 @@ resource "aws_apigatewayv2_api" "example_http" {
   tags = {}
 }
 
+#Creating a deployment for an API requires at least one aws_apigatewayv2_route resource associated with that API.
+resource "aws_apigatewayv2_deployment" "example_http" {
+  api_id      = aws_apigatewayv2_api.example_http.id
+  description = "v1.0.0-alpha"
+
+  #To avoid race conditions when all resources are being created together,
+  #you need to add implicit resource references via the triggers argument or
+  #explicit resource references using the resource depends_on meta-argument.
+  triggers = {
+    #Arbitrary map that will trigger a redeployment when changed.
+    #To force a redeployment without changing these keys/values, use the terraform taint command.
+
+    #List ALL routes and integrations here
+    redeployment = sha1(join(",", list(
+      jsonencode(aws_apigatewayv2_integration.example_http),
+      jsonencode(aws_apigatewayv2_route.example_http),
+    )))
+  }
+
+  #It is recommended to enable the resource lifecycle configuration block create_before_destroy argument
+  #in this resource configuration to properly order redeployments in Terraform.
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 resource "aws_apigatewayv2_stage" "example_http" {
   api_id      = aws_apigatewayv2_api.example_http.id
   name        = var.deployment_environment_name
@@ -105,30 +135,4 @@ resource "aws_apigatewayv2_stage" "example_http" {
   }
 
   tags = {}
-}
-
-#Creating a deployment for an API requires at least one aws_apigatewayv2_route resource associated with that API.
-resource "aws_apigatewayv2_deployment" "example_http" {
-  api_id      = aws_apigatewayv2_api.example_http.id
-  description = "v1.0.0-alpha"
-
-  #To avoid race conditions when all resources are being created together,
-  #you need to add implicit resource references via the triggers argument or
-  #explicit resource references using the resource depends_on meta-argument.
-  triggers = {
-    #Arbitrary map that will trigger a redeployment when changed.
-    #To force a redeployment without changing these keys/values, use the terraform taint command.
-
-    #List ALL routes and integrations here
-    redeployment = sha1(join(",", list(
-      jsonencode(aws_apigatewayv2_integration.example_http),
-      jsonencode(aws_apigatewayv2_route.example_http),
-    )))
-  }
-
-  #It is recommended to enable the resource lifecycle configuration block create_before_destroy argument
-  #in this resource configuration to properly order redeployments in Terraform.
-  lifecycle {
-    create_before_destroy = true
-  }
 }

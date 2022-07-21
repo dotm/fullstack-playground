@@ -62,7 +62,7 @@ resource "aws_apigatewayv2_integration" "example_http" {
 
   #template_selection_expression = ""
 
-  timeout_milliseconds = 29000 #50 to 30000 (default) ms for http
+  timeout_milliseconds = 30000 #50 to 30000 (default) ms for http
 }
 
 resource "aws_apigatewayv2_integration_response" "example_http" {
