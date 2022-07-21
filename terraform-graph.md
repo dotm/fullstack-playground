@@ -1,0 +1,21 @@
+## Creating graph from Terraform
+
+- Change directory to the terraform module directory that you want to graph.
+- Might need to change the backend to local.
+  - Create a new branch.
+  - Delete the existing state file to avoid migrating the state file to local.
+  - Run `terraform init`
+- `terraform graph -draw-cycles > graph.dot`
+- Add these inside the dot file inside the digraph:
+  - splines = "true"
+  - overlap = "false"
+  - (splines avoid drawing edges over nodes, overlap to avoid nodes overlapping each other)
+- Remove unnecessary nodes to reduce noise:
+  - Find with regex and then replace with empty string:
+    - .+\[root\] var\..+\n
+    - .+\[root\] provider\..+\n
+    - .+\[root\] data\..+\n
+  - Probably don't remove `local.`
+- `cat graph.dot | dot -Kneato -Tsvg > graph.svg`
+  - Use neato layout engine because it's neater. [Other layout engines](https://graphviz.org/docs/layouts/).
+  - Use svg to enable search in browser. You can use png for zoom out capability.
