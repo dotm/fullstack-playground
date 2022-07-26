@@ -9,8 +9,9 @@ locals {
 resource "random_uuid" "value" {
 }
 resource "null_resource" "go_build_functions_output" {
+  #use function list and for each instead of build_functions.go ~kodok
   triggers = {
-    always_run = random_uuid.value.result #optimize this ~kodok
+    always_run = random_uuid.value.result
   }
 
   provisioner "local-exec" {
@@ -21,7 +22,7 @@ resource "null_resource" "go_build_functions_output" {
 //Lambda
 
 data "archive_file" "lambda_hello_world" {
-  type = "zip"
+  type       = "zip"
   depends_on = [null_resource.go_build_functions_output]
 
   source_file = "${path.module}/dist/functions/hello-world"
@@ -49,18 +50,21 @@ resource "aws_cloudwatch_log_group" "hello_world" {
 resource "aws_iam_role" "lambda_exec" {
   name = "serverless_lambda"
 
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Action = "sts:AssumeRole"
-      Effect = "Allow"
-      Sid    = ""
-      Principal = {
-        Service = "lambda.amazonaws.com"
-      }
-      }
-    ]
-  })
+  assume_role_policy = <<-EOF
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": "sts:AssumeRole",
+          "Principal": {
+            "Service": "lambda.amazonaws.com"
+          },
+          "Effect": "Allow",
+          "Sid": ""
+        }
+      ]
+    }
+    EOF
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_policy" {
@@ -95,8 +99,7 @@ resource "aws_apigatewayv2_stage" "lambda" {
       status                  = "$context.status"
       responseLength          = "$context.responseLength"
       integrationErrorMessage = "$context.integrationErrorMessage"
-      }
-    )
+    })
   }
 }
 

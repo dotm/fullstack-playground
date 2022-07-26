@@ -38,3 +38,6 @@ https://learn.hashicorp.com/tutorials/terraform/pattern-module-creation
   - Backend (BE)
   - Frontend (FE)
 - Security Module
+  - Authentication and/or Authorization (Auth)
+    - This can be put inside App BE for custom auth solution.
+  - Anti Distributed Denial of Service (DDoS)
